@@ -1,20 +1,33 @@
 # app.py
+import logging
+
 from flask import Flask, request, send_from_directory, jsonify
 from flask_cors import CORS
+
+from config import conf, setup_logging
+from utils import valid_authorization
+from hello import hello_world
 
 app = Flask(__name__) # 创建flask应用
 CORS(app) # 支持跨域访问
 
+setup_logging()
+
+logging.info("*******************config info:*******************")
+logging.info(conf())
+
 # 默认为get请求
-@app.route('/hello')
+@app.route('/v1/hello')
 def hello():
-    return 'hello world' # 返回text/html类型响应，是一个html文件，<body>hello world</body>
+    if not valid_authorization(request):
+        return jsonify({"error": "Invalid Authorization header"}), 500
+    return hello_world()
 
 # 上传文件
-@app.route('/upload', methods=['POST'])
+@app.route('/v1/upload', methods=['POST'])
 def upload():
     # request.json解析post的json数据
-    print(request.json)
+    logging.info(request.json)
     # request.files解析上传的文件
     f = request.files['filename']
     f.save(f'your_path/{f.filename}')
@@ -22,7 +35,7 @@ def upload():
     return jsonify({'message': 'upload success'}) 
 
 # 文件服务器
-@app.route('/download/<path:name>')
+@app.route('/v1/download/<path:name>')
 def download(name):
     return send_from_directory("your_path", name, as_attachment=True)
 
