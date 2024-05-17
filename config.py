@@ -8,7 +8,7 @@ def load_config():
         with open("config.json") as f:
             return json.load(f)
 
-    with open("config-example.json") as f:
+    with open("config-template.json") as f:
         return json.load(f)
 
 config = load_config()
