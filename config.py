@@ -37,4 +37,4 @@ def setup_logging():
     console_handler.setFormatter(formatter)
 
     # 获取根日志记录器，添加文件日志和控制台日志
-    logging.basicConfig(level=logging.INFO, handlers=[file_handler, console_handler])
+    logging.basicConfig(level=logging.DEBUG, handlers=[file_handler, console_handler])
