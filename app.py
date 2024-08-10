@@ -5,7 +5,7 @@ from flask import Flask, request, send_from_directory, jsonify
 from flask_cors import CORS
 
 from config import conf, setup_logging
-from utils import valid_authorization
+from utils import authorize, make_success_response, make_error_response
 from hello import hello_world
 
 app = Flask(__name__) # 创建flask应用
@@ -18,9 +18,8 @@ logging.info(conf())
 
 # 默认为get请求
 @app.route('/v1/hello')
+@authorize
 def hello():
-    if not valid_authorization(request):
-        return jsonify({"error": "Invalid Authorization header"}), 500
     return hello_world()
 
 # 上传文件

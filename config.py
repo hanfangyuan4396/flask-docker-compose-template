@@ -27,7 +27,7 @@ def setup_logging():
     )
 
     # 设置文件日志，日志文件名为 app.log，最大文件大小为 10MB，最多保留 5 个文件
-    file_handler = RotatingFileHandler('app.log', maxBytes=10*1024*1024, backupCount=5, encoding='utf-8')
+    file_handler = RotatingFileHandler('flask-app.log', maxBytes=10*1024*1024, backupCount=5, encoding='utf-8')
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 
