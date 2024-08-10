@@ -4,9 +4,8 @@ import logging
 from flask import Flask, request, send_from_directory, jsonify
 from flask_cors import CORS
 
+from services.hello.hello import hello_serivce
 from config import conf, setup_logging
-from utils import authorize, make_success_response, make_error_response
-from hello import hello_world
 
 app = Flask(__name__) # 创建flask应用
 CORS(app) # 支持跨域访问
@@ -16,11 +15,7 @@ setup_logging()
 logging.info("*******************config info:*******************")
 logging.info(conf())
 
-# 默认为get请求
-@app.route('/v1/hello')
-@authorize
-def hello():
-    return hello_world()
+app.register_blueprint(hello_serivce, url_prefix='/api/v1/hello')
 
 # 上传文件
 @app.route('/v1/upload', methods=['POST'])
