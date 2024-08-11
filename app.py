@@ -6,6 +6,7 @@ from flask_cors import CORS
 
 from services.hello.hello import hello_serivce
 from config import conf, setup_logging
+from utils.response import make_error_response
 
 app = Flask(__name__) # 创建flask应用
 CORS(app) # 支持跨域访问
@@ -36,7 +37,7 @@ def download(name):
 # 错误处理
 @app.errorhandler(Exception)
 def error_handler(e):
-    return jsonify({'error': repr(e)}), 500
+    return make_error_response(repr(e)), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)
