@@ -62,7 +62,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const webhookUrl = "${{ env.HFY_WECOM_WEBHOOK_URL }}";
+            const webhookUrl = "${{ env.WECOM_WEBHOOK_URL }}";
             const messageContent = "${{ github.repository }}" + "部署失败！";
             const message = {
               msgtype: "text",
