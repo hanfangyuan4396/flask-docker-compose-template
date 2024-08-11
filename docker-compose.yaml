@@ -2,15 +2,16 @@ version: "3"
 
 services:
   flask-api:
-    image: flask-api
-    container_name: flask-api
+    image: registry.cn-hangzhou.aliyuncs.com/hanfangyuan/flask-api:latest # 使用acr镜像
+    pull_policy: always
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "4396:80"    # 端口映射，宿主机的某个端口映射到容器的80端口
-    volumes:
-      - .:/api       # 将当前目录挂载到容器的/api目录下，更新当前目录代码时，容器中的代码也会更新，不用重新构建镜像
+    # volumes:
+      # - .:/api       # 将当前目录挂载到容器的/api目录下，更新当前目录代码时，容器中的代码也会更新，不用重新构建镜像
     environment:
       WORKER_NUM: 2  # 可以通过环境变量来设置gunicorn的进程数，默认为1
+      TZ: "Asia/Shanghai"
     restart: always
